@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BarberSYS</title>
+  <link rel="stylesheet" href="../static/assets/registros.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+    rel="stylesheet" />
+  <link rel="shortcut icon" href="..//static/assets/images/Logo.png" type="image/x-icon" />
+</head>
+<body class="container">
+  <div class="shadow">
+    <header class="header">
+      <div class="header__container">
+        <a href=""><img class="logo" src="../static/assets/images/Logo.png" alt="Caveira"></a>
+        <p>BarberSys - Sistema para Barberarias</p>
+      </div>
+      <h1>Novo Usuário</h1>
+    </header>
+    <body class="container__login">
+      <section class="content__login">
+        <form class="form" action="/new_user" method="POST">
+
+          <label for="name">Nome</label>
+          <input type="text" name="usuario" placeholder="Digite seu nome" id="name" required />
+
+          <label for="email">E-mail</label>
+          <input type="email" placeholder="Digite seu email" id="email" required name="email" />
+
+          <label for="senha">Senha</label>
+          <input type="password" placeholder="Digite sua senha" id="senha" required name="senha" />
+          <label for="check_senha">Confirme sua senha</label>
+          <input type="password" placeholder="Digite sua senha novamente" id="check_senha" required
+            name="check_senha" />
+
+          {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+          {% for category, message in messages %}
+          <div class="alert {{ category }}">
+            {{ message }}
+          </div>
+          {% endfor %}
+          {% endif %}
+          {% endwith %}
+          <input class="btn" type="submit" value="Salvar" />
+        </form>
+      </section>
+  </div>
+</body>
+
+
+
+</html>

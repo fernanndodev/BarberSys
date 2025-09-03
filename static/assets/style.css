@@ -1,0 +1,125 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  border: 0;
+  font-family: "Montserrat", sans-serif;
+  font-size: 16px;
+  color: #fff;
+}
+
+.shadow {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(20, 20, 20, 0.692);
+}
+
+.container__login {
+  background-image: url(images/Fundo_Login.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-color: black;
+}
+
+.content__login {
+  width: 200px;
+  margin: auto;
+  padding-top: 100px;
+}
+
+.logo {
+  width: 250px;
+  height: 250px;
+  background-image: url(images/Logo.png);
+  background-position: center;
+  background-size: cover;
+  padding-top: 100px;
+}
+
+.logo p {
+  color: red;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 115px;
+  font-size: 20px;
+}
+
+.form {
+  width: 250px;
+  margin: 15px auto;
+}
+
+.form label {
+  display: block;
+  margin-bottom: 5px;
+  text-align: left;
+}
+
+.form input {
+  width: 250px;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 5px;
+  color: #000000;
+}
+
+.btn {
+  background-color: #ff0000;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.btn_entrar[disabled]{
+  opacity: 0.5;
+}
+
+.btn_registrar {
+  background-color: transparent;
+  border: solid white 2px;
+  cursor: pointer;
+  margin-top: 4px;
+}
+
+.btn_registrar:hover{
+  color: #000000;
+  background-color: #fff;
+}
+
+.btn_registrar[value]:hover{
+  transition: 0.3s;
+  color: #000000;
+  background-color: #fff;
+}
+
+
+.btn_registrar[value] {
+  color: rgb(231, 231, 231)
+}
+
+.btn__recpass {
+  background-color: transparent;
+  margin-left: 105px;
+  font-size: 13px;
+  margin-bottom: 20px;
+  cursor: pointer;
+
+}
+
+.btn__recpass[disabled]{
+  opacity: 0.7;
+  cursor: default
+}
+
+.error{
+  color: #fff;
+  background-color:red;
+  display: none;
+}
+
+.alert{
+  font-weight: bold;
+  padding: 10px;
+  color: green;
+}
