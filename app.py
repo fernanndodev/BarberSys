@@ -43,7 +43,7 @@ def create_tables():
             id INT AUTO_INCREMENT PRIMARY KEY,
             nome VARCHAR(100) NOT NULL,
             email VARCHAR(100) NOT NULL UNIQUE,
-            senha VARCHAR(100) NOT NULL
+            senha LONGTEXT NOT NULL
         )
     """)
       print("Tabela 'usuarios' criada (ou já existia).")
