@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BarberSYS</title>
+
+    <link rel="stylesheet" href="../static/assets/incluiCadastro.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet" />
+    <link rel="shortcut icon" href="../static/assets/images/Logo.png" type="image/x-icon" />
+    <script src="../static/assets/script.js" defer></script>
+  </head>
+
+  <body class="container">
+    <div class="shadow">
+      <header class="header">
+        <div class="header__container">
+          <a href="#"><img class="logo" src="../static/assets/images/Logo.png" alt="Caveira"></a>
+          <p>BarberSys - Sistema para Barbearias</p>
+        </div>
+        <h1>{{ 'Editar Cliente' if cliente else 'Cadastrar Cliente' }}</h1>
+      </header>
+
+      <section class="content__login">
+        <form class="form"
+          action="{{ url_for('editarCliente', id=cliente[0]) if cliente else url_for('incluiCliente') }}" method="POST">
+
+          <label for="name">Nome</label>
+          <input type="text" id="name" name="nome" placeholder="Digite o nome do cliente"
+            value="{{ cliente[1] if cliente else '' }}" required />
+
+          <label for="email">E-mail</label>
+          <input type="email" id="email" name="email" placeholder="Digite o e-mail do cliente"
+            value="{{ cliente[2] if cliente else '' }}" required />
+
+          <label for="endereco">Endereço</label>
+          <input type="text" id="endereco" name="endereco" placeholder="Digite o endereço do cliente"
+            value="{{ cliente[3] if cliente else '' }}" required />
+
+          <label for="telefone">Celular</label>
+          <input type="tel" id="telefone" name="telefone" placeholder="Digite o celular do cliente"
+            value="{{ cliente[4] if cliente else '' }}" required />
+
+          <input class="btn" type="submit" value="{{ 'Atualizar' if cliente else 'Incluir' }}" />
+        </form>
+      </section>
+    </div>
+  </body>
+</html>

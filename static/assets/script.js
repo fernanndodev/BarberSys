@@ -1,19 +1,40 @@
 function onChangeEmail() {
-  toggleButtonDisabled()
-  toggleEmailErrors()
-  
-
+  toggleButtonDisabled();
+  toggleEmailErrors();
 }
-
-
 
 function register() {
   window.location.href = "/register";
 }
 
+function cliente() {
+  window.location.href = "/cliente";
+}
+
+function incluir() {
+  window.location.href = "/incluir";
+}
+function incluiCliente() {
+  window.location.href = "/incluir";
+}
+function listarCliente() {
+  window.location.href = "/listarCliente";
+}
+
+function voltar() {
+  window.location.href = "/listarCliente";
+}
+
+function voltarCliente() {
+  window.location.href = "/cliente";
+}
+function voltarHome() {
+  window.location.href = "/voltarHome";
+}
+
 function onChangePassword() {
-  toggleButtonDisabled()
-  togglePasswordErrors()
+  toggleButtonDisabled();
+  togglePasswordErrors();
 }
 
 // Verifica se email é vazio ou valida ele
@@ -23,8 +44,7 @@ function isEmailValid() {
     return false;
   }
 
-  return validateEmail(email)
-
+  return validateEmail(email);
 }
 // Verifica se senha é vazio ou valida ele
 function isPasswordValid() {
@@ -40,45 +60,40 @@ function validateEmail(email) {
   return /\S+@\S+\.\S+/.test(email);
 }
 
-
-
 // Habilita ou desabilita mensagem de erro caso haja erro no email
 function toggleEmailErrors() {
-  const email = document.getElementById('email').value;
+  const email = document.getElementById("email").value;
 
   if (!email) {
-    document.getElementById('email-required-error').style.display="block";
+    document.getElementById("email-required-error").style.display = "block";
   } else {
-    document.getElementById('email-required-error').style.display = "none";
+    document.getElementById("email-required-error").style.display = "none";
   }
 
   if (validateEmail(email)) {
-    document.getElementById('email-invalid-error').style.display = "none";
+    document.getElementById("email-invalid-error").style.display = "none";
   } else {
-     document.getElementById('email-invalid-error').style.display = "block";
+    document.getElementById("email-invalid-error").style.display = "block";
   }
 }
 
-
-// Habilita ou desabilita mensagem de erro caso haja erro na senha 
+// Habilita ou desabilita mensagem de erro caso haja erro na senha
 function togglePasswordErrors() {
-  const password = document.getElementById('password').value;
+  const password = document.getElementById("password").value;
 
   if (!password) {
-    document.getElementById('password-required-error').style.display="block";
+    document.getElementById("password-required-error").style.display = "block";
   } else {
-    document.getElementById('password-required-error').style.display = "none";
+    document.getElementById("password-required-error").style.display = "none";
   }
-
 }
 
 // Desabilita botoes caso email for invalido
 function toggleButtonDisabled() {
-  const emailValid = isEmailValid()
+  const emailValid = isEmailValid();
   document.getElementById("recover-password-btn").disabled = !emailValid;
-  
-  const passwordValid = isPasswordValid()
-  document.getElementById('login-button').disabled = !emailValid || !passwordValid; 
-  
-}
 
+  const passwordValid = isPasswordValid();
+  document.getElementById("login-button").disabled =
+    !emailValid || !passwordValid;
+}

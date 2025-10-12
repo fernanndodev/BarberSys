@@ -1,0 +1,134 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  border: 0;
+  font-family: "Montserrat", sans-serif;
+  font-size: 16px;
+  color: #fff;
+}
+
+html {
+  overflow-x: hidden;
+}
+
+.container {
+   width: 100vw;
+  background-image: url(../assets/images/Fundo__TelaInicial.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.shadow {
+  min-height: 100vh;
+  background-color: #00000070;
+}
+
+.header {
+  width: 80%;
+  margin: auto;
+  padding-top: 24px;
+}
+
+.header__container {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.header h1 {
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 24px;
+}
+
+.header__container p {
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 32px;
+}
+
+.logo {
+  width: 100px;
+  height: 100px;
+  border-radius: 100%;
+}
+
+
+
+.content {
+  width: 600px;
+  margin: auto;
+  padding-top: 100px;
+}
+
+.content h1 {
+  text-transform: uppercase;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.container__btn {
+  display: flex;
+  margin-top: 32px;
+  gap: 20px;
+}
+
+.btn {
+  background-color: #271919;
+  padding: 15px;
+  border-radius: 40px;
+  text-align: center;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.btn a {
+  text-decoration: none;
+}
+
+.btn:hover {
+  background-color: #232323;
+}
+
+table {
+  background-color: transparent;
+  border-collapse: collapse;
+}
+
+table tr th {
+  background-color: rgb(79, 75, 75);
+}
+
+.columm {
+  font-size: 14px;
+  text-align: center;
+  padding: 10px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+table th {
+  background-color: rgba(255, 255, 255, 0.15);
+  text-transform: uppercase;
+  padding: 10px;
+  font-weight: 600;
+}
+
+table td {
+  padding: 8px;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+table tr:hover td {
+  background-color: rgba(255, 255, 255, 0.1);
+  transition: background 0.3s;
+}

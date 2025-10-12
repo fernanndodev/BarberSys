@@ -1,0 +1,108 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  border: 0;
+  font-family: "Montserrat", sans-serif;
+  font-size: 16px;
+  color: #fff;
+}
+
+.container {
+  width: 100vw;
+  height: 100vh;
+  background-image: url(../assets/images/Fundo__TelaInicial.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.shadow {
+  height: 100vh;
+  background-color: #00000070;
+}
+
+.header {
+  width: 80%;
+  margin: auto;
+  padding-top: 24px;
+}
+
+.logo {
+  width: 100px;
+  height: 100px;
+  border-radius: 100%;
+}
+
+.header__container {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin: auto;
+}
+
+.header__container p {
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 32px;
+}
+
+.header h1 {
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 24px;
+}
+
+.container__botoes {
+  width: 600px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin: 250px auto 0;
+  gap: 20px;
+}
+
+.container__btn{
+  display: flex;
+  justify-content: center;
+}
+
+
+.btn {
+  display: grid;
+  background-color: #271919;
+  padding: 20px;
+  border-radius: 40px;
+  text-align: center;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.btn a {
+  text-decoration: none;
+}
+
+.btn:hover {
+  background-color: #3f2929;
+}
+
+.flash {
+  width: 300px;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  text-align: center;
+  padding: 10px;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.flash.erro {
+  background: #ffcccc;
+  color: #b30000;
+}
+
+.flash.sucesso {
+  background: #ccffcc;
+  color: #006600;
+}

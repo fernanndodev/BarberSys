@@ -1,0 +1,119 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  border: 0;
+  font-family: "Montserrat", sans-serif;
+  font-size: 16px;
+  color: #fff;
+}
+
+.container {
+  width: 100vw;
+  height: 100vh;
+  background-image: url(../assets/images/Fundo__TelaInicial.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.shadow {
+  height: 100vh;
+  background-color: #00000070;
+}
+
+.header {
+  width: 100vw;
+  margin: auto;
+  padding-top: 24px;
+}
+
+.logo {
+  width: 100px;
+  height: 100px;
+  border-radius: 100%;
+}
+
+.header__container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+}
+
+.header__container p {
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 32px;
+}
+
+.header h1 {
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 24px;
+}
+
+.container__btn{
+  display: flex;
+  justify-content: space-between;
+}
+
+.form {
+  width: 400px;
+  margin: auto;
+}
+
+.form h2 {
+  margin-top: 50px;
+}
+
+.form label {
+  display: inline-block;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  text-align: left;
+}
+
+
+.form input {
+  width: 500px;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  color: #000000;
+}
+
+button {
+  width: 500px;
+  padding: 10px;
+   border-radius: 10px;
+  margin-bottom: 15px;
+  color: #000000;
+}
+
+.form .btn {
+  display: block;
+  background-color: #ff0000;
+  font-weight: bold;
+  text-transform: uppercase;
+  width: 160px;
+  cursor: pointer;
+}
+
+.flash {
+  padding: 10px;
+  margin: 15px 0;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.flash.erro {
+  background: #ffcccc;
+  color: #b30000;
+}
+
+.flash.sucesso {
+  background: #ccffcc;
+  color: #006600;
+}
+

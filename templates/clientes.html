@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8">
+    <title>Lista de Clientes</title>
+    <link rel="stylesheet" href="../static/assets/clientes.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet" />
+    <link rel="shortcut icon" href="#" type="image/x-icon" />
+    <script src="../static/assets/script.js" defer></script>
+  </head>
+  <body class="container">
+    <div class="shadow">
+      <header class="header">
+        <div class="header__container">
+          <img class="logo" src="../static/assets/images/Logo.png" alt="Caveira">
+          <p>BarberSys - Sistema para Barberarias</p>
+        </div><br>
+        <h1>Clientes</h1>
+      </header>
+      <main class="main">
+        <section class="container__table">
+          <div class="content">
+            {% if clientes %}
+            <h1>Lista de Clientes</h1>
+            <table class="search__table">
+              <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Endereço</th>
+                <th>Telefone</th>
+                <th>Ações</th>
+              </tr>
+              {% for cliente in clientes %}
+              <tr>
+                <td class="columm">{{ cliente.id }}</td>
+                <td class="columm">{{ cliente.nome }}</td>
+                <td class="columm">{{ cliente.email }}</td>
+                <td class="columm">{{ cliente.endereco }}</td>
+                <td class="columm">{{ cliente.telefone }}</td>
+                <td class="columm">
+                  <div class="container__btn">
+                    <form action="{{ url_for('editarCliente', id=cliente.id) }}" method="get" style="display:inline;">
+                      <button class="btn" type="submit">Editar</button>
+                    </form>
+
+                    <form action="{{ url_for('excluirCliente', id=cliente.id) }}" method="post" style="display:inline;">
+                      <button class="btn" type="submit"
+                        onclick="return confirm('Tem certeza que deseja excluir este cliente?')">
+                        Excluir
+                      </button>
+                    </form>
+                  </div>
+                </td>
+              </tr>
+              {% endfor %}
+            </table>
+            {% endif %}
+            <div class="container__btn">
+              <button class="btn" type="button" onclick="voltar()">Voltar</button>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

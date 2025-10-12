@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BarberSYS</title>
+  <link rel="stylesheet" href="../static/assets/buscarCliente.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+    rel="stylesheet" />
+  <link rel="shortcut icon" href="../static/assets/images/Logo.png" type="image/x-icon" />
+</head>
+<script src="../static/assets/script.js" defer></script>
+<body class="container">
+  <div class="shadow">
+    <header class="header">
+      <div class="header__container">
+        <a href="#"><img class="logo" src="../static/assets/images/Logo.png" alt="Caveira"></a>
+        <p>BarberSys - Sistema para Barberarias</p>
+      </div>
+      <h1>Clientes</h1>
+    </header>
+    <body class="container__login">
+      <section class="content__editar">
+        <form class="form" action="/buscar_Cliente" method="POST">
+          <h2>Insira nome e o e-mail do cliente</h2>
+          <label for="name">Nome</label>
+          <input type="text" placeholder="Digite o nome do cliente" id="name" name="nome" required />
+          <label for="email">E-mail</label>
+          <input type="email" placeholder="Digite o e-mail do cliente" id="email" name="email" required />
+          <div class="container__btn">
+            <input class="btn" type="submit" value="Listar Cliente" />
+            <button class="btn" type="button" onclick="voltarCliente()" /> Voltar</button>
+          </div>
+          {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+          {% for categoria, msg in messages %}
+          <div class="flash {{ categoria }}">{{ msg }}</div>
+          {% endfor %}
+          {% endif %}
+          {% endwith %}
+        </form>
+      </section>
+  </div>
+</body>
+</html>
