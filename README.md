@@ -11,3 +11,9 @@ Para rodar a aplicação, é necessario instalar o banco de dados MariaDB e conf
      host": "localhost",
     "user": "root",
     "password": "659326@#Te"
+
+Primeira Funcionalidade 
+ - Registro de usuarios para acessar o sistema
+
+Segunda Funcionalidade 
+ - Cadastros de clientes (inclusão,listagem, edição e exclusão)
