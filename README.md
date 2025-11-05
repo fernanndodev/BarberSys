@@ -17,3 +17,6 @@ Primeira Funcionalidade
 
 Segunda Funcionalidade 
  - Cadastros de clientes (inclusão,listagem, edição e exclusão)
+
+Terceira Funcionalidade 
+ - Cadastros de Barbeiros e Servicos (inclusão,listagem, edição e exclusão)
