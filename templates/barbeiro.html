@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8">
+    <title>Lista de Barbeiros</title>
+    <link rel="stylesheet" href="../static/assets/barbeiros.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet" />
+    <link rel="shortcut icon" href="#" type="image/x-icon" />
+    <script src="../static/assets/script.js" defer></script>
+  </head>
+  <body class="container">
+    <div class="shadow">
+      <header class="header">
+        <div class="header__container">
+          <img class="logo" src="../static/assets/images/Logo.png" alt="Caveira">
+          <p>BarberSys - Sistema para Barberarias</p>
+        </div><br>
+        <h1>Barbeiros</h1>
+      </header>
+      <main class="main">
+        <section class="container__table">
+          <div class="content">
+            {% if barbeiros %}
+            <h1>Lista de Barbeiros</h1>
+            <table class="search__table">
+              <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Endereço</th>
+                <th>Telefone</th>
+                <th>Serviços</th>
+                <th>Ações</th>
+                
+              </tr>
+              {% for barbeiro in barbeiros %}
+              <tr>
+                <td class="columm">{{ barbeiro.id }}</td>
+                <td class="columm">{{ barbeiro.nome }}</td>
+                <td class="columm">{{ barbeiro.email }}</td>
+                <td class="columm">{{ barbeiro.endereco }}</td>
+                <td class="columm">{{ barbeiro.telefone }}</td>
+                <td class="columm">{{ barbeiro.servicos }}</td>
+                <td>
+                <div class="container__btn">
+                  <form action="{{ url_for('editarBarbeiro', id=barbeiro.id) }}" method="get" style="display:inline;">
+                    <button class="btn" type="submit">Editar</button>
+                  </form>
+                  
+                  <form action="{{ url_for('excluirBarbeiro', id=barbeiro.id) }}" method="post" style="display:inline;">
+                    <button class="btn" type="submit"
+                      onclick="return confirm('Tem certeza que deseja excluir este profissional?')">
+                      Excluir
+                    </button>
+                  </form>
+                </div>
+                </td>
+              </tr>
+              {% endfor %}
+            </table>
+            {% endif %}
+            <div class="container__btn">
+              <button class="btn" type="button" onclick="voltarB()">Voltar</button>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

@@ -59,8 +59,28 @@ def create_tables():
             telefone  VARCHAR(100) NOT NULL
         )
     """)
+      cursor.execute("""
+        CREATE TABLE IF NOT EXISTS barbeiros (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            nome VARCHAR(100) NOT NULL,
+            email VARCHAR(100) NOT NULL UNIQUE,
+            endereco VARCHAR(100) NOT NULL,
+            telefone  VARCHAR(100) NOT NULL
+        )
+    """)
+      cursor.execute("""
+    CREATE TABLE IF NOT EXISTS barbeiro_servicos (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        barbeiro_id INT NOT NULL,
+        servico VARCHAR(50) NOT NULL,
+        FOREIGN KEY (barbeiro_id) REFERENCES barbeiros(id) ON DELETE CASCADE
+    )
+""")
+
       print("Tabela 'usuarios' criada (ou já existia)."),
       print("Tabela 'clientes' criada (ou já existia).")
+      print("Tabela 'barbeiro' criada (ou já existia).")
+      print("Tabela 'barbeiro_servicos' criada (ou já existia).")
       cursor.close()
       conn.close()
   except Exception as e:
@@ -239,7 +259,167 @@ def excluirCliente(id):
     return render_template('buscarCliente.html')
   
 
+# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Barbeiro<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+# Rota de novo Barbeiro
+@app.route('/barbeiro')
+def barbeiro():
+    return render_template('cadastroBarbeiro.html')
+  
+#ROTA INCLUI
+@app.route('/incluirB')
+def incluirB():
+    return render_template('incluiBarbeiro.html') 
+  
+
+@app.route('/incluiBarbeiro', methods=['POST'])
+def incluiBarbeiro():
+    nome = request.form['nome']
+    endereco = request.form['endereco']
+    email = request.form['email']
+    telefone = request.form['telefone']
+    servicos = request.form.getlist('servicos')
+    
+    
+    try:
+      cursor.execute("INSERT INTO barbeiros (nome,endereco,email,telefone) VALUES (%s, %s,%s,%s)", (nome,endereco,email,telefone))
+      db.commit()
+      barbeiro_id = cursor.lastrowid
+      for servico in servicos:
+            cursor.execute(
+                "INSERT INTO barbeiro_servicos (barbeiro_id, servico) VALUES (%s, %s)",
+                (barbeiro_id, servico)
+            )
+      db.commit()
+      flash("Barbeiro cadastrado com sucesso!", "sucesso")
+      return render_template('cadastroBarbeiro.html')
+    
+    except mysql.connector.IntegrityError:
+      flash ("Erro: email já cadastrado!")
+      return render_template("incluiBarbeiro.html", nome=nome, email=email)
+    
+    except Exception as e:
+        db.rollback()
+        flash(f"Erro ao cadastrar barbeiro: {e}", "erro")
+        return render_template("incluiBarbeiro.html", nome=nome, email=email)
+    
+# Rota Listar Barbeiro
+@app.route('/listarBarbeiro')
+def listarBarbeiro():
+  return render_template ('buscarBarbeiro.html')
+    
+#ROTA BUSCAR
+@app.route('/buscar_Barbeiro', methods = ['POST']) 
+def buscarBarbeiro():
+  
+  nome = request.form.get('nome','')
+  email = request.form.get('email','')
+  try:
+    conn = mysql.connector.connect(
+        host=db_config["host"],
+        user=db_config["user"],
+        password=db_config["password"],
+        database="projeto"     
+    )
+    cursor = conn.cursor(dictionary=True)
+   
+    query = """
+        SELECT id, nome, email, endereco, telefone
+        FROM barbeiros
+        WHERE nome LIKE %s OR email LIKE %s
+    """
+
+    cursor.execute(query, (f"%{nome}%", f"%{email}%"))
+    barbeiros = cursor.fetchall()
+  
+  
+  
+    if not barbeiros:
+        flash("Nenhum profissional encontrado!", "erro")  
+        return render_template('buscarBarbeiro.html')
+      
+      
+    for b in barbeiros:
+      cursor.execute("""
+          SELECT servico FROM barbeiro_servicos WHERE barbeiro_id = %s
+        """, (b['id'],))
+      servicos = [s['servico'] for s in cursor.fetchall()]
+      b['servicos'] = ', '.join(servicos) if servicos else 'Nenhum serviço cadastrado'
+
+  
+    return render_template("barbeiro.html",  barbeiros=barbeiros);
+  except Exception as e:
+        flash(f"Erro ao buscar barbeiros: {e}", "erro")
+        return render_template('buscarBarbeiro.html')
+
+  finally:
+        # Fecha o cursor e a conexão se existirem
+        try:
+            if cursor:
+                cursor.close()
+            if conn:
+                conn.close()
+        except:
+            pass
+
+#ROTA EDITAR
+@app.route('/editarBarbeiro/<int:id>', methods=['GET', 'POST'])
+def editarBarbeiro(id):
+    if request.method == 'GET':
+        cursor.execute("SELECT * FROM barbeiros WHERE id = %s", (id,))
+        barbeiro = cursor.fetchone()
         
+        
+        cursor.execute("SELECT servico FROM barbeiro_servicos WHERE barbeiro_id = %s", (id,))
+        servicos_barbeiro = [row[0] for row in cursor.fetchall()] 
+        return render_template('incluiBarbeiro.html', barbeiro=barbeiro, servicos_barbeiro=servicos_barbeiro)
+    else:
+        nome = request.form['nome']
+        email = request.form['email']
+        endereco = request.form['endereco']
+        telefone = request.form['telefone']
+        servicos = request.form.getlist('servicos')
+        try:
+          cursor.execute("""
+            UPDATE barbeiros 
+            SET nome=%s, email=%s, endereco=%s, telefone=%s 
+            WHERE id=%s
+        """, (nome, email, endereco, telefone, id))
+          db.commit()
+        
+        
+          cursor.execute("DELETE FROM barbeiro_servicos WHERE barbeiro_id = %s", (id,))
+
+     
+          for servico in servicos:
+                cursor.execute(
+                    "INSERT INTO barbeiro_servicos (barbeiro_id, servico) VALUES (%s, %s)",
+                    (id, servico)
+                )
+          db.commit()
+        
+          flash("Profissional atualizado com sucesso!", "success")
+          return render_template('cadastroBarbeiro.html')
+      
+        except Exception as e:
+            db.rollback()
+            flash(f"Erro ao atualizar barbeiro: {e}", "error")
+            return render_template('incluiBarbeiro.html', barbeiro=barbeiro)
+
+#ROTA EXCLUI
+@app.route('/excluirBarbeiro/<int:id>', methods=['POST'])
+def excluirBarbeiro(id):
+    try:
+        cursor.execute("DELETE FROM barbeiros WHERE id = %s", (id,))
+        db.commit()
+        flash("Profissional excluído com sucesso!", "success")
+    except Exception as e:
+        db.rollback()
+        flash(f"Erro ao excluir profissional: {e}", "error")
+    return render_template('buscarBarbeiro.html')
+  
+
+ 
 if __name__ == "__main__":
     app.run(debug=True)
 

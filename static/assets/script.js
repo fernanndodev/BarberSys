@@ -28,8 +28,29 @@ function voltar() {
 function voltarCliente() {
   window.location.href = "/cliente";
 }
+
 function voltarHome() {
   window.location.href = "/voltarHome";
+}
+
+function barbeiro() {
+  window.location.href = "/barbeiro";
+}
+
+function incluirB() {
+  window.location.href = "/incluirB";
+}
+
+function listarBarbeiro() {
+  window.location.href = "/listarBarbeiro";
+}
+
+function voltarB() {
+  window.location.href = "/listarBarbeiro";
+}
+
+function voltarBarbeiro() {
+  window.location.href = "/barbeiro";
 }
 
 function onChangePassword() {

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BarberSYS</title>
+  <link rel="stylesheet" href="../static/assets/" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="../static/assets/editarBarbeiros.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+    rel="stylesheet" />
+  <link rel="shortcut icon" href="../static/assets/images/Logo.png" type="image/x-icon" />
+</head>
+<script src="../static/assets/script.js" defer></script>
+<body class="container">
+  <div class="shadow">
+    <header class="header">
+      <div class="header__container">
+        <a href="#"><img class="logo" src="../static/assets/images/Logo.png" alt="Caveira"></a>
+        <p>BarberSys - Sistema para Barberarias</p>
+      </div>
+      <h1>Barbeiros</h1>
+    </header>
+    <body class="container__login">
+      <section class="content__login">
+        <form class="form" action="/incluiBarbeiro" method="POST">
+          <label for="name">Nome</label>
+          <input type="text" placeholder="Digite o nome do barbeiro" id="name" name="nome" required />
+
+          <label for="endereco">Endereço</label>
+          <input type="text" placeholder="Digite o endereço do barbeiro" id="endereco" name="endereco" required />
+
+          <label for="email">E-mail</label>
+          <input type="email" placeholder="Digite o e-mail do barbeiro id="email" name="email" required />
+
+          <label for="telefone">Celular</label>
+          <input type="tel" placeholder="Digite o endereço do barbeiro id="telefone" name="telefone" required />
+
+          <input class="btn" type="submit" value="Incluir" />
+        </form>
+      </section>
+  </div>
+</body>
+</html>

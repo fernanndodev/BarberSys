@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BarberSYS</title>
+
+    <link rel="stylesheet" href="../static/assets/incluiBarbeiro.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet" />
+    <link rel="shortcut icon" href="../static/assets/images/Logo.png" type="image/x-icon" />
+    <script src="../static/assets/script.js" defer></script>
+  </head>
+
+  <body class="container">
+    <div class="shadow">
+      <header class="header">
+        <div class="header__container">
+          <a href="#"><img class="logo" src="../static/assets/images/Logo.png" alt="Caveira"></a>
+          <p>BarberSys - Sistema para Barbearias</p>
+        </div>
+        <h1>{{ 'Editar Barbeiro' if barbeiro else 'Cadastrar Barbeiro' }}</h1>
+      </header>
+
+      <section class="content__login">
+        <form class="form"
+          action="{{ url_for('editarBarbeiro', id=barbeiro[0]) if barbeiro else url_for('incluiBarbeiro') }}"
+          method="POST">
+
+          <label for="name">Nome </label>
+          <input type="text" id="name" name="nome" placeholder="Digite o nome do barbeiro"
+            value="{{ barbeiro[1] if barbeiro else '' }}" required />
+
+          <label for="email">E-mail</label>
+          <input type="email" id="email" name="email" placeholder="Digite o e-mail do barbeiro"
+            value="{{ barbeiro[2] if barbeiro else '' }}" required />
+
+          <label for="endereco">Endereço</label>
+          <input type="text" id="endereco" name="endereco" placeholder="Digite o endereço do barbeiro"
+            value="{{ barbeiro[3] if barbeiro else '' }}" required />
+
+          <label for="telefone">Celular</label>
+          <input type="tel" id="telefone" name="telefone" placeholder="Digite o celular do barbeiro"
+            value="{{ barbeiro[4] if barbeiro else '' }}" required />
+          <div class="container__checkbox">
+            <fieldset>
+              <legend>Serviços</legend>
+     
+              <input type="checkbox" value="cabelo" name="servicos" {% if 'cabelo' in servicos_barbeiro %}checked{%
+                endif %}> Cabelo
+
+
+            
+                <input type="checkbox" value="barba" name="servicos" {% if 'barba' in servicos_barbeiro %}checked{%
+                  endif %}> Barba
+            
+
+             
+                <input type="checkbox" value="hidratacao" name="servicos" {% if 'hidratacao' in servicos_barbeiro
+                  %}checked{% endif %}> Hidratação
+             
+
+          
+                <input type="checkbox" value="pintura" name="servicos" {% if 'pintura' in servicos_barbeiro %}checked{%
+                  endif %}> Pintura
+             
+            </fieldset>
+          </div>
+          <input class="btn" type="submit" value="{{ 'Atualizar' if barbeiro else 'Incluir' }}" />
+        </form>
+      </section>
+    </div>
+  </body>
+</html>
