@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barbeiros Selecionado</title>
+    <link rel="stylesheet" href="../static/assets/barbeiroSelecionado.css">
+    <script src="../static/assets/script.js" defer></script>
+  </head>
+  <body class="container">
+    <div class="shadow">
+      <header class="header">
+        <div class="header__container">
+          <img class="logo" src="../static/assets/images/Logo.png" alt="Caveira">
+          <p>BarberSys - Sistema para Barberarias</p>
+        </div><br>
+        <h1>Profissionais para o serviço: {{ servico }}</h1>
+
+        {% if barbeiros %}
+        <ul>
+          {% for b in barbeiros %}
+          <table class="search__table" row="1" col="2">
+            <thead>
+              <th>Nome</th>
+              <th>Telefone</th>
+            <thead>
+              <td class="columm">{{ b.nome }}  </td>
+              <td class="columm">{{ b.telefone }}</td>
+            </tr>
+          </table>
+          <form class="form" action="/escolher-data" method="GET">
+            <input type="hidden" name="barbeiro_id" value="{{ b.id }}">
+            <input type="hidden" name="servico" value="{{ servico }}">
+            <button class="btn" type="submit">Escolher</button>
+          </form>
+          </li>
+          {% endfor %}
+        </ul>
+        {% else %}
+        <p>Nenhum profissional disponível.</p>
+        {% endif %}
+  </body>
+</html>

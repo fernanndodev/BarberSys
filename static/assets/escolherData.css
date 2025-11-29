@@ -1,0 +1,91 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  border: 0;
+  font-family: "Montserrat", sans-serif;
+  font-size: 16px;
+  color: #fff;
+}
+
+html {
+  overflow-x: hidden;
+}
+
+.container {
+  width: 100vw;
+  background-image: url(../assets/images/agendamento.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.shadow {
+  min-height: 100vh;
+  background-color: #0808089d;
+}
+
+.header {
+  width: 80%;
+  margin: auto;
+  padding-top: 24px;
+}
+
+.header__container {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.header h1 {
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 24px;
+  
+}
+
+.header__container p {
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 32px;
+}
+
+.logo {
+  width: 100px;
+  height: 100px;
+  border-radius: 100%;
+}
+
+
+
+.container__data{
+  text-align: center;
+  margin-top: 50px;
+}
+
+.container__data h2 {
+  margin-bottom: 20px;
+  font-size: 32px;
+}
+
+.select_day { 
+  color: bla;
+  font-size: 18px;
+}
+
+.container__data input {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.container__data input[type ='date']{
+  color: black;
+  padding: 10px;
+}
+
+.btn{
+  padding: 15px;
+  background-color: rgb(78, 40, 40);
+  border-radius: 10px;
+
+}

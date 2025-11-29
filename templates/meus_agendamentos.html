@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8">
+    <title>Agendamento</title>
+    <link rel="stylesheet" href="../static/assets/meus_agendamentos.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet" />
+    <link rel="shortcut icon" href="#" type="image/x-icon" />
+    <script src="../static/assets/script.js" defer></script>
+  </head>
+  <body class="container">
+    <div class="shadow">
+      <header class="header">
+        <div class="header__container">
+          <img class="logo" src="../static/assets/images/Logo.png" alt="Caveira">
+          <p>BarberSys - Sistema para Barberarias</p>
+        </div><br>
+        <h1>Agendamento</h1>
+      </header>
+      <main class="main">
+        <section class="container__table">
+          <div class="content">
+            <h1>Meus Agendamentos</h1>
+            <table class="search__table">
+              <tr>
+                <th>ID</th>
+                <th>Barbeiro</th>
+                <th>Serviço</th>
+                <th>Data / Hora</th>
+              </tr>
+
+              {% for a in agendamentos %}
+              <tr>
+                <td class="columm">{{ a[0] }}</td>
+                <td class="columm">{{ a[1] }}</td>
+                <td class="columm">{{ a[2] }}</td>
+                <td class="columm">{{ a[3] }}</td>
+                <td>
+                  <form action="/excluir-agendamento/{{ a[0] }}" method="post"
+                    onsubmit="return confirm('Deseja realmente excluir?');">
+                    <button type="submit" class="btn-delete">Excluir</button>
+                  </form>
+                </td>
+              </tr>
+              {% endfor %}
+            </table>
+
+</html>

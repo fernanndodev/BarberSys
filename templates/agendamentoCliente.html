@@ -26,7 +26,7 @@
 
       <section class="content__login">
         <form class="form"
-          action="{{ url_for('editarCliente', id=cliente[0]) if cliente else url_for('incluiCliente') }}" method="POST">
+          action="/incluiCliente_Agendamento" method="POST">
 
           <label for="name">Nome</label>
           <input type="text" id="name" name="nome" placeholder="Digite o nome do cliente"
@@ -45,11 +45,11 @@
             value="{{ cliente[4] if cliente else '' }}" required />
 
 
-          <label for="telefone">Senha</label>
+          <label for="senha">Senha</label>
           <input type="password" id="senha" name="senha" placeholder="Crie uma Senha"
             value="{{ cliente[5] if cliente else '' }}" required />
 
-          <input class="btn" type="submit" value="{{ 'Atualizar' if cliente else 'Incluir' }}" />
+          <input class="btn" type="submit" value="Incluir" />
         </form>
       </section>
     </div>

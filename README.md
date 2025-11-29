@@ -18,8 +18,14 @@ Primeira Funcionalidade
 Segunda Funcionalidade 
  - Cadastros de clientes (inclusão,listagem, edição e exclusão)
 
+<<<<<<< HEAD
 Terceira Funcionalidade 
  - Cadastros de Barbeiros e Servicos (inclusão,listagem, edição e exclusão)
 
 Quarta Funcionalidade
  - Agendamento 
+=======
+Terceira Funcionalidade
+
+ -Cadastros de Barbeiros e Servicos (inclusão,listagem, edição e exclusão)
+>>>>>>> 422f0bb (Funçao Agendamento)

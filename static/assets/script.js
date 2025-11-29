@@ -11,6 +11,10 @@ function cliente() {
   window.location.href = "/cliente";
 }
 
+function cadastroCliente() {
+  window.location.href = "/cliente";
+}
+
 function incluir() {
   window.location.href = "/incluir";
 }
@@ -49,9 +53,37 @@ function voltarB() {
   window.location.href = "/listarBarbeiro";
 }
 
+
 function voltarBarbeiro() {
   window.location.href = "/barbeiro";
 }
+
+function agendamento() {
+  window.location.href = "/agendamento";
+}
+
+
+function incluiCliente_Agendamento() {
+  window.location.href = "/agendamentoCliente";
+}
+
+
+function servico() {
+  window.location.href = "/servico";
+}
+
+function meus_agendamentos() {
+  window.location.href = "/meus_agendamentos"
+}
+
+
+function voltar_agendamento() {
+  window.location.href = "/voltar_agendamento";
+}
+
+
+
+
 
 function onChangePassword() {
   toggleButtonDisabled();
@@ -118,3 +150,20 @@ function toggleButtonDisabled() {
   document.getElementById("login-button").disabled =
     !emailValid || !passwordValid;
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+    const botoes = document.querySelectorAll(".auto-send");
+    const form = document.getElementById("form-servicos");
+    const servicoHidden = document.getElementById("servico");
+
+    botoes.forEach(botao => {
+        botao.addEventListener("click", () => {
+            const valor = botao.dataset.value;
+
+            servicoHidden.value = valor;
+
+            form.submit();
+        });
+    });
+});
+

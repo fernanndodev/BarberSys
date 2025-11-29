@@ -1,5 +1,8 @@
-from flask import Flask, render_template, request, redirect, url_for,flash
+ 
+from flask import Flask, render_template, request, redirect, url_for,flash, session
 from werkzeug.security import generate_password_hash, check_password_hash
+from datetime import datetime
+
 
 import mysql.connector
 
@@ -55,8 +58,10 @@ def create_tables():
             id INT AUTO_INCREMENT PRIMARY KEY,
             nome VARCHAR(100) NOT NULL,
             email VARCHAR(100) NOT NULL UNIQUE,
+            senha VARCHAR(100) NOT NULL,
             endereco VARCHAR(100) NOT NULL,
             telefone  VARCHAR(100) NOT NULL
+        
         )
     """)
       cursor.execute("""
@@ -76,11 +81,23 @@ def create_tables():
         FOREIGN KEY (barbeiro_id) REFERENCES barbeiros(id) ON DELETE CASCADE
     )
 """)
+      cursor.execute("""
+      CREATE TABLE agendamentos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    cliente_id INT NOT NULL,
+    barbeiro_id INT NOT NULL,
+    servico VARCHAR(100) NOT NULL,
+    data_hora DATETIME NOT NULL,
+    criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (barbeiro_id) REFERENCES barbeiros(id)
+);
+""")
 
       print("Tabela 'usuarios' criada (ou já existia)."),
       print("Tabela 'clientes' criada (ou já existia).")
       print("Tabela 'barbeiro' criada (ou já existia).")
       print("Tabela 'barbeiro_servicos' criada (ou já existia).")
+      print("Tabela 'agendamentos' criada (ou já existia).")
       cursor.close()
       conn.close()
   except Exception as e:
@@ -175,9 +192,9 @@ def incluiCliente():
     endereco = request.form['endereco']
     email = request.form['email']
     telefone = request.form['telefone']
-    
+    senha = request.form['senha']
     try:
-      cursor.execute("INSERT INTO clientes (nome,endereco,email,telefone) VALUES (%s, %s,%s,%s)", (nome,endereco,email,telefone))
+      cursor.execute("INSERT INTO clientes (nome,endereco,email,telefone,senha) VALUES (%s, %s,%s,%s,%s)", (nome,endereco,email,telefone,senha))
       db.commit()
       flash("Cliente cadastrado com sucesso!", "sucesso")
       return render_template('cadastroCliente.html')
@@ -345,7 +362,6 @@ def buscarBarbeiro():
         """, (b['id'],))
       servicos = [s['servico'] for s in cursor.fetchall()]
       b['servicos'] = ', '.join(servicos) if servicos else 'Nenhum serviço cadastrado'
-
   
     return render_template("barbeiro.html",  barbeiros=barbeiros);
   except Exception as e:
@@ -418,8 +434,226 @@ def excluirBarbeiro(id):
         flash(f"Erro ao excluir profissional: {e}", "error")
     return render_template('buscarBarbeiro.html')
   
+# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>AGENDAMENTO<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
- 
+
+@app.route('/servico')
+def servico():
+  return render_template ('servicos.html')
+
+
+
+@app.route('/agendamento')
+def agendamento():
+  return render_template ('agendamento.html')
+
+        
+@app.route('/agendamentoCliente')
+def agendamentoCliente():
+  return render_template ('agendamentoCliente.html')
+
+
+    
+@app.route('/incluiCliente_Agendamento', methods=['POST'])
+def incluiCliente_Agendamento():
+    nome = request.form['nome']
+    endereco = request.form['endereco']
+    email = request.form['email']
+    telefone = request.form['telefone']
+    senha = request.form['senha']
+    try:
+      cursor.execute("INSERT INTO clientes (nome,endereco,email,telefone,senha) VALUES (%s, %s,%s,%s,%s)", (nome,endereco,email,telefone,senha))
+      db.commit()
+      flash("Cliente cadastrado com sucesso!", "sucesso")
+      return render_template('agendamento.html')
+    except mysql.connector.IntegrityError:
+      flash ("Erro: email já cadastrado!")
+      return render_template("agendamentoClientes.html", nome=nome, email=email)
+    
+@app.route('/login_Cliente', methods=['POST'])
+def login_Cliente():
+    email = request.form['email']
+    senha = request.form['senha']
+    
+    cursor.execute("SELECT * FROM clientes WHERE email=%s AND senha=%s", (email, senha))
+    user = cursor.fetchone()
+
+    if user:
+      session["cliente_id"] = user[0]  
+      return render_template('incluir_agendamento.html')
+    else:
+      return "Usuário ou senha incorretos!"
+    
+@app.route('/processar-servico', methods=['GET'])
+def processar_servico():
+    servico = request.args.get("servico")
+   
+   
+    if not servico:
+        flash("Nenhum serviço selecionado!", "erro")
+        return render_template("servicos.html")
+
+    try:
+        conn = mysql.connector.connect(
+            host=db_config["host"],
+            user=db_config["user"],
+            password=db_config["password"],
+            database="projeto"
+        )
+        cursor = conn.cursor(dictionary=True)
+
+        query = """
+            SELECT b.id, b.nome, b.email, b.telefone 
+            FROM barbeiros b
+            INNER JOIN barbeiro_servicos s
+                ON b.id = s.barbeiro_id
+            WHERE s.servico = %s
+        """
+
+        cursor.execute(query, (servico,))
+        barbeiros = cursor.fetchall()
+
+        if not barbeiros:
+            flash("Nenhum barbeiro encontrado para esse serviço!", "erro")
+            return render_template("servicos.html", barbeiros=[], servico=servico)
+
+        return render_template("barbeiroSelecionado.html", barbeiros=barbeiros, servico=servico)
+
+    except Exception as e:
+        flash(f"Erro ao buscar barbeiros: {e}", "erro")
+        return render_template("servicos.html")
+
+    finally:
+        try:
+            cursor.close()
+            conn.close()
+        except:
+            pass
+          
+@app.route('/escolher-data', methods=['GET'])
+def escolher_data():
+    barbeiro_id = request.args.get("barbeiro_id")
+    servico = request.args.get("servico")
+
+    return render_template(
+        "escolherData.html",
+        barbeiro_id=barbeiro_id,
+        servico=servico
+    )
+          
+          
+@app.route('/escolher-horario', methods=['GET'])
+def escolher_horario():
+    barbeiro_id = request.args.get("barbeiro_id")
+    servico = request.args.get("servico")
+    data = request.args.get("data")  
+    data_formatada = datetime.strptime(data, "%Y-%m-%d").strftime("%d/%m/%Y")
+   
+  
+    horarios_fixos = [
+        "09:00", "10:00", "11:00",
+        "13:00", "14:00", "15:00",
+        "16:00", "17:00"
+    ]
+
+   
+    cursor.execute("""
+        SELECT DATE_FORMAT(data_hora,'%H:%i') AS hora
+        FROM agendamentos
+        WHERE barbeiro_id = %s AND DATE(data_hora) = %s
+    """, (barbeiro_id, data))
+
+    ocupados = [h[0] for h in cursor.fetchall()]
+    disponiveis = [h for h in horarios_fixos if h not in ocupados]
+
+    return render_template(
+        "escolherHorario.html",
+        barbeiro_id=barbeiro_id,
+        servico=servico,
+        data=data_formatada,
+        horarios=disponiveis
+    )
+
+
+@app.route('/confirmar-agendamento', methods=['POST'])
+def confirmar_agendamento():
+    barbeiro_id = request.form.get("barbeiro_id")
+    servico = request.form.get("servico")
+    data = request.form.get("data")        
+    horario = request.form.get("horario") 
+     
+    cliente_id = session.get("cliente_id")
+    
+    cursor.execute("SELECT nome FROM barbeiros WHERE id = %s", (barbeiro_id,))
+    nome_barbeiro = cursor.fetchone()[0]
+    data_hora = datetime.strptime(f"{data} {horario}", "%d/%m/%Y %H:%M")
+    
+
+    cursor.execute("""
+        INSERT INTO agendamentos (cliente_id,barbeiro_id, servico, data_hora)
+        VALUES (%s, %s, %s,%s)
+    """, (cliente_id,barbeiro_id, servico, data_hora))
+
+    db.commit()
+
+    return render_template(
+        "confirmacao.html",
+        servico=servico,
+        horario=horario,
+        data=data,
+        barbeiro=nome_barbeiro
+    )
+    
+
+    
+
+
+@app.route('/meus_agendamentos')
+def meus_agendamentos():
+    cliente_id = session.get("cliente_id")
+    
+    cursor.execute("""
+    SELECT 
+        a.id,
+        b.nome,
+        a.servico,
+        DATE_FORMAT(a.data_hora, '%d/%m/%Y %H:%i')
+    FROM agendamentos a
+    JOIN barbeiros b ON a.barbeiro_id = b.id
+    WHERE a.cliente_id = %s
+    ORDER BY a.data_hora DESC
+""", (cliente_id,))
+
+
+    agendamentos = cursor.fetchall()
+    if not agendamentos:
+        flash("Você ainda não possui agendamentos.", "info")
+        return redirect(url_for('voltar_agendamento'))
+
+    return render_template('meus_agendamentos.html', agendamentos=agendamentos)
+  
+  
+@app.route('/excluir-agendamento/<int:id>', methods=['POST'])
+def excluir_agendamento(id):
+    cliente_id = session.get("cliente_id")
+
+    cursor.execute("""
+        DELETE FROM agendamentos 
+        WHERE id = %s AND cliente_id = %s
+    """, (id, cliente_id))
+
+    db.commit()
+    flash("Agendamento excluido com sucesso.", "info")
+    return redirect(url_for('voltar_agendamento'))
+
+
+
+@app.route('/voltar_agendamento')
+def voltar_agendamento():
+  return render_template ('incluir_agendamento.html')
+    
+
+
 if __name__ == "__main__":
     app.run(debug=True)
 

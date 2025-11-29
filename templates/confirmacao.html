@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmacao</title>
+    <link rel="stylesheet" href="../static/assets/confirmacao.css">
+    <script src="../static/assets/script.js" defer></script>
+  </head>
+  <body class="container">
+    <div class="shadow">
+      <header class="header">
+        <div class="header__container">
+          <img class="logo" src="../static/assets/images/Logo.png" alt="Caveira">
+          <p>BarberSys - Sistema para Barberarias</p>
+        </div><br>
+        <h1>Agendamento Confirmado!</h1>
+        <div class="container__confirmacao">
+          <p>Serviço: <strong class="itens">{{ servico }}</strong></p>
+          <p>Profissional: <strong class="itens">{{ barbeiro }}</strong></p>
+          <p>Data: <strong class="itens">{{ data }}</strong></p>
+          <p>Horário: <strong class="itens"> {{ horario }}</strong></p>
+          <button type="button" class="btn" onclick="voltar_agendamento()">Voltar ao início</button>
+        </div>
+
+
+  </body>
+</html>

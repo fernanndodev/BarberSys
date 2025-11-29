@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escolher Horario</title>
+    <link rel="stylesheet" href="../static/assets/escolherHorario.css">
+    <script src="../static/assets/script.js"></script>
+  </head>
+  <body class="container">
+    <div class="shadow">
+      <header class="header">
+        <div class="header__container">
+          <img class="logo" src="../static/assets/images/Logo.png" alt="Caveira">
+          <p>BarberSys - Sistema para Barberarias</p>
+        </div><br>
+        <h1>Agendamento</h1>
+        <div class="container__horarios">
+          <h2>Escolha o horário para {{ data }}</h2>
+            <ul>
+              {% for h in horarios %}
+              <li class="horarios">
+                <form action="/confirmar-agendamento" method="POST">
+                  <input type="hidden" name="barbeiro_id" value="{{ barbeiro_id }}">
+                  <input type="hidden" name="servico" value="{{ servico }}">
+                  <input type="hidden" name="data" value="{{ data }}">
+                  <input type="hidden" name="horario" value="{{ h }}">
+                  <button class="btn" type="submit">{{ h }}</button>
+                </form>
+              </li>
+              {% endfor %}
+            </ul>
+        </div>
+
+        {% if horarios|length == 0 %}
+        <p>Nenhum horário disponível nesta data.</p>
+        {% endif %}
+
+</html>

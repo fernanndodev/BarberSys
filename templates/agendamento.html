@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BarberSYS</title>
+    <link rel="stylesheet" href="../static/assets/agendamento.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="shortcut icon"
+      href="TelaLogin/assets/images/Logo.png"
+      type="image/x-icon"
+    />
+
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+     
+  </head>
+  <body class="container__login">
+    <div class="shadow">
+      <section class="content__login">
+        <div class="logo">
+          <p>BARBERSYS</p>
+        </div>
+        <h1>Agendamento</h1>
+        <form class="form" action="/login_Cliente" method="POST">
+          <label for="email">E-mail do cliente</label>
+          <input
+            type="text"
+            name="email"
+            placeholder="Digite seu email"
+            required
+            onchange="onChangeEmail()"
+            id="email"
+          />
+
+          <div class="error" id="email-required-error">
+            E-mail é obrigatório
+          </div>
+          <div class="error" id="email-invalid-error">E-mail é inválido</div>
+          <label for="password">Senha</label>
+          <input
+            type="password"
+            name="senha"
+            placeholder="Digite sua senha"
+            id="password"
+            required
+            onchange="onChangePassword()"
+          />
+          <div class="error" id="password-required-error">
+            Senha é obrigatória
+          </div>
+          <button
+            type="button"
+            class="btn__recpass"
+            disabled="true"
+            id="recover-password-btn"
+          >
+            Esqueci minha senha
+          </button>
+
+          <input
+            class="btn btn_entrar"
+            type="submit"
+            value="Entrar"
+            id="login-button"
+            disabled="true"
+          />
+
+          <input
+            class="btn btn_registrar"
+            type="button"
+            value="Registrar Cliente"
+            onclick="incluiCliente_Agendamento()"
+          />
+           {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+          {% for category, message in messages %}
+          <div class="alert {{ category }}">
+            {{ message }}
+          </div>
+          {% endfor %}
+          {% endif %}
+          {% endwith %}
+        </form>
+        
+      </section>
+    </div>
+    <script src="../static/assets/script.js"></script>
+  </body>
+</html>

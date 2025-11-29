@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escolher Data</title>
+    <link rel="stylesheet" href="../static/assets/escolherData.css">
+  </head>
+  <body class="container">
+    <div class="shadow">
+      <header class="header">
+        <div class="header__container">
+          <img class="logo" src="../static/assets/images/Logo.png" alt="Caveira">
+          <p>BarberSys - Sistema para Barberarias</p>
+        </div><br>
+        <h1>Agendamento</h1>
+      
+        
+        <div class="container__data">
+          <h2>Escolha a Data</h2>
+
+            <form action="/escolher-horario" method="GET">
+              <input type="hidden" name="barbeiro_id" value="{{ barbeiro_id }}">
+              <input type="hidden" name="servico" value="{{ servico }}">
+              <label class="select_day">Selecione o Dia:</label><br>
+              <input type="date" name="data" required><br>
+              <button class="btn" type="submit">Ver horários disponíveis</button>
+            </form>
+        </div>
+      
+
+
+  </body>
+</html>
