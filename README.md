@@ -20,3 +20,6 @@ Segunda Funcionalidade
 
 Terceira Funcionalidade 
  - Cadastros de Barbeiros e Servicos (inclusão,listagem, edição e exclusão)
+
+Quarta Funcionalidade
+ - Agendamento 
